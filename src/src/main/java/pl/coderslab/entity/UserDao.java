@@ -9,9 +9,9 @@ public class UserDao {
     private static final String Create_user_query =
             "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
     private static final String Read_user_query =
-            "SELECT * FROM users  id = ?";
+            "SELECT * FROM users WHERE  id = ?";
     private static String Update_user_query =
-            "UPDATE users SET username = ?, email = ?, password = ?, where id =?";
+            "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
     private static String Delete_user_query =
             "DELETE FROM users WHERE id = ?";
     private static final String Find_all_users_query =
@@ -31,6 +31,7 @@ public class UserDao {
             prestat.setString(1, user.getUserName());
             prestat.setString(2,user.getEmail());
             prestat.setString(3, hashPassword(user.getPassword()));
+            prestat.executeUpdate();
             ResultSet resultSet = prestat.getGeneratedKeys();
             if(resultSet.next()){
                 user.setId(resultSet.getInt(1));
